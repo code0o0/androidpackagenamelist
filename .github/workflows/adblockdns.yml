@@ -1,0 +1,41 @@
+name: Update AdBlock DNS Rules
+
+on:
+  schedule:
+    # 每天凌晨12点运行（UTC时间）
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 允许手动触发工作流
+
+jobs:
+  update-adblock-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download required files
+        run: |
+          # 下载所需的广告过滤规则列表
+          curl -L -o adblock-rules.txt https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt
+          # 如果有多个文件需要下载，可以添加更多的curl命令
+
+      - name: Setup sing-box
+        run: |
+          # 下载并安装sing-box
+          curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.12.0-alpha.18/sing-box-1.12.0-alpha.18-linux-amd64.tar.gz
+          tar -xzf sing-box.tar.gz
+          chmod +x ./sing-box-X.X.X-linux-amd64/sing-box
+          mv ./sing-box-X.X.X-linux-amd64/sing-box /usr/local/bin/
+
+      - name: Generate adblockdns.srs
+        run: |
+          # 配置sing-box命令并执行，生成adblockdns.srs文件
+          sing-box rule-set convert --type adguard [--output adblockdns.srs] adblockdns.txt
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add adblockdns.srs
+          git commit -m "Update adblockdns.srs $(date +"%Y-%m-%d")" || echo "No changes to commit"
+          git push
