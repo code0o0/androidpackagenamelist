@@ -30,7 +30,7 @@ jobs:
       - name: Generate adblockdns.srs
         run: |
           # 配置sing-box命令并执行，生成adblockdns.srs文件
-          sing-box rule-set convert --type adguard [--output adblockdns.srs] adblockdns.txt
+          sing-box rule-set convert --type adguard --output adblockdns.srs adblockdns.txt
 
       - name: Commit and push changes
         run: |
