@@ -16,7 +16,7 @@ jobs:
       - name: Download required files
         run: |
           # 下载所需的广告过滤规则列表
-          curl -L -o adblock-rules.txt https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt
+          curl -L -o adblockdns.txt https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt
           # 如果有多个文件需要下载，可以添加更多的curl命令
 
       - name: Setup sing-box
