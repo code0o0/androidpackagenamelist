@@ -24,8 +24,8 @@ jobs:
           # 下载并安装sing-box
           curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.12.0-alpha.18/sing-box-1.12.0-alpha.18-linux-amd64.tar.gz
           tar -xzf sing-box.tar.gz
-          chmod +x ./sing-box-X.X.X-linux-amd64/sing-box
-          mv ./sing-box-X.X.X-linux-amd64/sing-box /usr/local/bin/
+          chmod +x ./sing-box-1.12.0-alpha.18-linux-amd64/sing-box
+          mv ./sing-box-1.12.0-alpha.18-linux-amd64/sing-box /usr/local/bin/
 
       - name: Generate adblockdns.srs
         run: |
